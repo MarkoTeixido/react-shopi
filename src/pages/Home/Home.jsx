@@ -22,7 +22,7 @@ function Home() {
   return (
     <div className="flex flex-col gap-4">
       Home
-      <div className='grid gap-4 grid-cols-4 w-full max-w-screen-lg'>
+      <div className='grid gap-4 grid-cols-4 w-full max-w-screen-lg mb-8'>
         {
           items?.map(item => (
             <Card key={item.id} data={item} />
