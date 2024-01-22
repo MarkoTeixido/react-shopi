@@ -8,14 +8,14 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${apiUrl}/products`)
-        const data = await response.json()
-        setItems(data)
+        const response = await fetch(`${apiUrl}/products`);
+        const data = await response.json();
+        setItems(data);
       } catch (error) {
         console.error(`Oh no, ocurrió un error: ${error}`);
       }
-    }
-    fetchData()
+    };
+    fetchData();
   }, []);
   
 
