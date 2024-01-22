@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ShoppingCartContext } from '../../context/ShoppingCartContext';
+import { ShoppingContext } from '../../context/ShoppingContext';
 
 const Navbar = () => {
-    const context = useContext(ShoppingCartContext);
+    const context = useContext(ShoppingContext);
 
     const [scrolling, setScrolling] = useState(false);
     const activeStyle = "underline underline-offset-4";
