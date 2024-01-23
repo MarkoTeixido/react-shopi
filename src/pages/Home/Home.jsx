@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "../../components/Card/Card";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
+import CheckoutSideMenu from "../../components/CheckoutSideMenu/CheckoutSideMenu";
 import { apiUrl } from "../../api/api";
 
 function Home() {
@@ -31,6 +32,7 @@ function Home() {
         }
       </div>
       <ProductDetail />
+      <CheckoutSideMenu />
     </div>
   );
 }

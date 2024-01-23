@@ -6,9 +6,10 @@ import MyOrder from '../MyOrder/MyOrder';
 import MyOrders from '../MyOrders/MyOrders';
 import NotFound from '../NotFound/NotFound';
 import SignIn from '../SignIn/SignIn';
-import Navbar from '../../components/Navbar/Navbar'
+import Navbar from '../../components/Navbar/Navbar';
 import Layout from '../../components/Layout/Layout';
 import '../../index.css';
+
 
 const AppRoutes = () => {
   let routes = useRoutes([
@@ -27,10 +28,10 @@ const App = () => {
   return (
     <ShoppingProvider>
       <BrowserRouter>
-      <Layout>
-        <AppRoutes />
-      </Layout>
-      <Navbar />
+        <Layout>
+          <AppRoutes />
+        </Layout>
+        <Navbar />
       </BrowserRouter>
     </ShoppingProvider>
   );
