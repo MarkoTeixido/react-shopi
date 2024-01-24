@@ -1,4 +1,5 @@
-import { useContext } from 'react'
+import { useContext } from 'react';
+import { Link } from 'react-router-dom'
 import { ShoppingContext } from '../../context/ShoppingContext';
 import OrderCard from '../OrderCard/OrderCard';
 import { totalPrice } from '../../utils/utils';
@@ -10,7 +11,20 @@ const CheckoutSideMenu = () => {
         const filteredProducts = context.cartProducts.filter(product => product.id != id);
         context.setCartProducts(filteredProducts);
         context.setCount(context.count - 1);
-    }
+    };
+
+    const handleCheckout = () => {
+        const orderToAdd = {
+          date: '01.02.23',
+          products: context.cartProducts,
+          totalProducts: context.cartProducts.length,
+          totalPrice: totalPrice(context.cartProducts)
+        };
+    
+        context.setOrder([...context.order, orderToAdd]);
+        context.setCartProducts([]);
+        context.setCount(context.count = 0);
+    };
 
     return (
         <aside className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} w-[400px] h-[calc(100vh-68px)] top-[68px] flex-col fixed right-0 border border-black rounded-lg bg-white overflow-y-scroll`}>
@@ -23,7 +37,7 @@ const CheckoutSideMenu = () => {
                 </div>
             </div> 
 
-            <div className='px-6'>
+            <div className='px-6 flex-1'>
                 {
                     context.cartProducts.map(product => (
                         <OrderCard
@@ -37,11 +51,14 @@ const CheckoutSideMenu = () => {
                     ))
                 }
             </div>
-            <div className='px-6'>
-                <p className='flex justify-between items-center'>
-                <span className='font-normal'>Total:</span>
-                <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
+            <div className='px-6 mb-6'>
+                <p className='flex justify-between items-center mb-2'>
+                    <span className='font-normal'>Total:</span>
+                    <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
                 </p>
+                <Link to='/my-orders/last'>
+                    <button className='bg-neutral-900 py-3 text-white w-full rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear' onClick={() => handleCheckout()}>Checkout</button>
+                </Link>
             </div>
         </aside>
     );
