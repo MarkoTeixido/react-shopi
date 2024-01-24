@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { ShoppingContext } from '../../context/ShoppingContext';
 import OrderCard from '../OrderCard/OrderCard';
 import { totalPrice } from '../../utils/utils';
+import { format } from 'date-fns';
 
 const CheckoutSideMenu = () => {
     const context = useContext(ShoppingContext);
+    const date = new Date();
 
     const handleDelete = (id) => {
         const filteredProducts = context.cartProducts.filter(product => product.id != id);
@@ -15,7 +17,7 @@ const CheckoutSideMenu = () => {
 
     const handleCheckout = () => {
         const orderToAdd = {
-          date: '01.02.23',
+          date: format(date, 'dd.MM.yy', { awareOfUnicodeTokens: true }),
           products: context.cartProducts,
           totalProducts: context.cartProducts.length,
           totalPrice: totalPrice(context.cartProducts)
