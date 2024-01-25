@@ -1,12 +1,10 @@
-import { createContext, useState } from "react";
+import { useEffect, createContext, useState } from "react";
+import { apiUrl } from "../api/api";
 import PropTypes from 'prop-types';
 
 const ShoppingContext = createContext();
 
 const ShoppingProvider = ({children}) => {
-    ShoppingProvider.propTypes = {
-        children: PropTypes.node.isRequired,
-    };
 
     // Shopping Cart · Increment quantity
     const [count , setCount] = useState(0);
@@ -30,6 +28,70 @@ const ShoppingProvider = ({children}) => {
     // Shopping Cart · Order
     const [order, setOrder] = useState([]);
 
+    // Get products
+    const [items, setItems] = useState(null);
+    const [filteredItems, setFilteredItems] = useState(null);
+
+    // Get products by title
+    const [searchByTitle, setSearchByTitle] = useState(null);
+    console.log('searchByTitle: ', searchByTitle);
+
+    // Get products by category
+    const [searchByCategory, setSearchByCategory] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${apiUrl}/products`);
+            const data = await response.json();
+            setItems(data);
+          } catch (error) {
+            console.error(`Oh no, ocurrió un error: ${error}`);
+          }
+        };
+        fetchData();
+    }, []);
+
+    const filteredItemsByTitle = (items, searchByTitle) => {
+        return (
+            items?.filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()))
+        );
+    };
+
+    const filteredItemsByCategory = (items, searchByCategory) => {
+        return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()));
+    }
+    
+
+    useEffect(() => {
+        const filterBy = (searchType, items, searchByTitle, searchByCategory) => {
+            if (searchType === 'BY_TITLE') {
+                return filteredItemsByTitle(items, searchByTitle);
+            }
+    
+            if (searchType === 'BY_CATEGORY') {
+                return filteredItemsByCategory(items, searchByCategory);
+            }
+    
+            if (searchType === 'BY_TITLE_AND_CATEGORY') {
+                return filteredItemsByCategory(items, searchByCategory).filter(item => item.title.toLowerCase().includes(searchByTitle.toLowerCase()));
+            }
+    
+            if (!searchType) {
+                return items;
+            }
+        };
+
+        try {
+            if (searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_TITLE_AND_CATEGORY', items, searchByTitle, searchByCategory));
+            if (searchByTitle && !searchByCategory) setFilteredItems(filterBy('BY_TITLE', items, searchByTitle, searchByCategory));
+            if (!searchByTitle && searchByCategory) setFilteredItems(filterBy('BY_CATEGORY', items, searchByTitle, searchByCategory));
+            if (!searchByTitle && !searchByCategory) setFilteredItems(filterBy(null, items, searchByTitle, searchByCategory));
+        } catch (error) {
+            console.error(`Oh no, ocurrió un error: ${error}`);
+        }
+    }, [ items, searchByTitle, searchByCategory]);
+
     return (
         <ShoppingContext.Provider value={{
             count,
@@ -46,10 +108,21 @@ const ShoppingProvider = ({children}) => {
             closeCheckoutSideMenu,
             order,
             setOrder,
+            items,
+            setItems,
+            searchByTitle,
+            setSearchByTitle,
+            filteredItems,
+            searchByCategory,
+            setSearchByCategory,
         }}>
             {children}
         </ShoppingContext.Provider>  
     );
 }
+
+ShoppingProvider.propTypes = {
+    children: PropTypes.node.isRequired,
+};
 
 export {ShoppingContext, ShoppingProvider};
