@@ -56,7 +56,7 @@ const CheckoutSideMenu = () => {
             </div>
             <div className='px-4 gap-3 flex flex-col'>
                 <Link to='/my-orders/last' className=''>
-                    <button className='w-full px-10 py-4 text-white border bg-neutral-900 hover:opacity-80 transition duration-150 hover:ease-linear text-lg font-medium' onClick={() => handleCheckout()}>Checkout</button>
+                    <button className='w-full px-10 py-4 text-white border bg-neutral-900 hover:opacity-80 transition duration-150 hover:ease-linear text-lg font-medium' onClick={() => handleCheckout()} disabled={context.cartProducts.length === 0}>Checkout</button>
                 </Link>
                 <Link to='/' className=''>
                     <button className='w-full px-10 py-4 bg-white border hover:bg-neutral-900 hover:text-white transition duration-150 hover:ease-linear text-lg font-medium'>Back</button>
