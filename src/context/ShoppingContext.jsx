@@ -1,3 +1,4 @@
+
 import { useEffect, createContext, useState } from "react";
 import { apiUrl } from "../api/api";
 import PropTypes from 'prop-types';
@@ -31,6 +32,7 @@ const ShoppingProvider = ({children}) => {
     // Get products
     const [items, setItems] = useState(null);
     const [filteredItems, setFilteredItems] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Get products by title
     const [searchByTitle, setSearchByTitle] = useState(null);
@@ -45,6 +47,7 @@ const ShoppingProvider = ({children}) => {
             const response = await fetch(`${apiUrl}/products`);
             const data = await response.json();
             setItems(data);
+            setLoading(false);
           } catch (error) {
             console.error(`Oh no, ocurrió un error: ${error}`);
           }
@@ -110,6 +113,7 @@ const ShoppingProvider = ({children}) => {
             setOrder,
             items,
             setItems,
+            loading,
             searchByTitle,
             setSearchByTitle,
             filteredItems,

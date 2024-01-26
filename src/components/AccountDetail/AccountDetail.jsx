@@ -31,7 +31,7 @@ function AccountDetail() {
     
     return (
         <main>
-            <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-start h-screen md:px-8">
+            <div className="max-w-screen-xl mx-auto mt-10 px-4 flex items-center justify-start md:px-8">
                 <div className="max-w-lg mx-auto text-gray-600">
                     <div className="space-y-3 text-center">
                         <h3 className="text-neutral-900 font-semibold">

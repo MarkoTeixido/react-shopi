@@ -3,30 +3,14 @@ import { Link } from 'react-router-dom'
 import { ShoppingContext } from '../../context/ShoppingContext';
 import OrderCard from '../OrderCard/OrderCard';
 import { totalPrice } from '../../utils/utils';
-import { format } from 'date-fns';
 
 const CheckoutSideMenu = () => {
     const context = useContext(ShoppingContext);
-    const date = new Date();
     
     const handleDelete = (id) => {
         const filteredProducts = context.cartProducts.filter(product => product.id != id);
         context.setCartProducts(filteredProducts);
         context.setCount(context.count - 1);
-    };
-
-    const handleCheckout = () => {
-        const orderToAdd = {
-          date: format(date, 'dd.MM.yy', { awareOfUnicodeTokens: true }),
-          products: context.cartProducts,
-          totalProducts: context.cartProducts.length,
-          totalPrice: totalPrice(context.cartProducts)
-        };
-    
-        context.setOrder([...context.order, orderToAdd]);
-        context.setCartProducts([]);
-        context.setCount(context.count = 0);
-        context.setSearchByTitle(null);
     };
 
     useEffect(() => {
@@ -60,7 +44,6 @@ const CheckoutSideMenu = () => {
                             id={product.id}
                             title={product.title}
                             imageUrl={product.images}
-                            price={product.price}
                             handleDelete={handleDelete}
                         />
                     ))
@@ -71,8 +54,8 @@ const CheckoutSideMenu = () => {
                     <span className='font-normal'>Total:</span>
                     <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
                 </p>
-                <Link to='/my-orders/last'>
-                    <button className='bg-neutral-900 py-3 text-white w-full max-sm:h-14 rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear' onClick={() => handleCheckout()}>Checkout</button>
+                <Link to='/cart'>
+                    <button className='bg-neutral-900 py-3 text-white w-full max-sm:h-14 rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear'>View my cart</button>
                 </Link>
             </div>
         </aside>

@@ -58,27 +58,27 @@ function MobileNavbar() {
                         </summary>
                         <ul className='mt-2 space-y-1 px-4 bg-white flex flex-col items-center gap-3 '>
                             <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-400 hover:text-neutral-700'>
-                                <NavLink to='/clothes'>
+                                <NavLink to='/clothes' onClick={() => context.setSearchByCategory('clothes')}>
                                     Clothes
                                 </NavLink>
                             </li>
                             <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-400 hover:text-neutral-700'>
-                                <NavLink to='/shoes'>
+                                <NavLink to='/shoes' onClick={() => context.setSearchByCategory('shoes')}>
                                     Shoes
                                 </NavLink>
                             </li>
                             <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-400 hover:text-neutral-700'>
-                                <NavLink to='/electronics'>
+                                <NavLink to='/electronics' onClick={() => context.setSearchByCategory('electronics')}>
                                     Electronics
                                 </NavLink>
                             </li>
                             <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
-                                <NavLink to='/Fornitures'>
+                                <NavLink to='/Fornitures' onClick={() => context.setSearchByCategory('fornitures')}>
                                     Fornitures
                                 </NavLink>
                             </li>
                             <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
-                                <NavLink to='/Others'>
+                                <NavLink to='/Others' onClick={() => context.setSearchByCategory('others')}>
                                     Others
                                 </NavLink>
                             </li>
