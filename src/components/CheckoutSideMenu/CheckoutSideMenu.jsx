@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { ShoppingContext } from '../../context/ShoppingContext';
 import OrderCard from '../OrderCard/OrderCard';
@@ -29,8 +29,20 @@ const CheckoutSideMenu = () => {
         context.setSearchByTitle(null);
     };
 
+    useEffect(() => {
+        if (context.isCheckoutSideMenuOpen) {
+            document.body.classList.add('no-scrolling');
+        } else {
+            document.body.classList.remove('no-scrolling');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scrolling');
+        };
+    }, [context.isCheckoutSideMenuOpen]);
+
     return (
-        <aside className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} w-[400px] h-[calc(100vh-68px)] top-[68px] flex-col fixed right-0 border border-black rounded-lg bg-white overflow-y-scroll`}>
+        <aside className={`${context.isCheckoutSideMenuOpen ? 'flex' : 'hidden'} max-sm:w-full max-sm:h-screen max-sm:border-none w-[400px] h-[calc(100vh-68px)] top-[68px] flex-col fixed right-0 border border-black rounded-lg bg-white overflow-y-scroll`}>
             <div className='flex justify-between items-center p-6'>
                 <h2 className='font-medium text-xl'>My Order</h2>
                 <div onClick={() => context.closeCheckoutSideMenu()} className='bg-gray-400 bg-opacity-30 hover:bg-opacity-20 p-2 rounded-full cursor-pointer'>
@@ -54,13 +66,13 @@ const CheckoutSideMenu = () => {
                     ))
                 }
             </div>
-            <div className='px-6 mb-6'>
+            <div className='px-6 min-h-screen mb-6'>
                 <p className='flex justify-between items-center mb-2'>
                     <span className='font-normal'>Total:</span>
                     <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
                 </p>
                 <Link to='/my-orders/last'>
-                    <button className='bg-neutral-900 py-3 text-white w-full rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear' onClick={() => handleCheckout()}>Checkout</button>
+                    <button className='bg-neutral-900 py-3 text-white w-full max-sm:h-14 rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear' onClick={() => handleCheckout()}>Checkout</button>
                 </Link>
             </div>
         </aside>

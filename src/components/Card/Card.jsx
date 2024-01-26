@@ -24,7 +24,7 @@ const Card = (data) => {
 
     if (isInCart) {
       return (
-        <div className='absolute top-0 right-0 flex justify-center items-center text-white bg-emerald-500 w-6 h-6 rounded-full m-2 transition duration-150 hover:ease-linear'>
+        <div className='absolute top-0 right-0 flex justify-center items-center text-white bg-emerald-500 w-6 h-6 rounded-full m-2'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
           </svg>
@@ -42,16 +42,18 @@ const Card = (data) => {
   };
 
   return (
-    <div className='bg-white cursor-pointer w-56 h-60 border rounded-md' onClick={() => showProduct(data.data)}>
-      <figure className='relative mb-2 w-full h-4/5'>
+    <div className='group block border rounded-md' onClick={() => showProduct(data.data)}>
+      <figure className='relative w-full'>
         <span className='absolute bottom-0 left-0 bg-white/60 rounded-lg text-black text-xs m-2 px-3 py-0.5'>{data.data.category.name}</span>
-        <img className='w-full h-full object-cover rounded-t-lg' src={data.data.images[0]} alt={data.data.title} />
+        <img className='h-[300px] w-full object-cover sm:h-[350px]' src={data.data.images[0]} alt={data.data.title} />
         {renderIcon(data.data.id)}
       </figure>
-      <p className='flex justify-between'>
-        <span className='text-sm font-normal pl-2'>{data.data.title}</span>
-        <span className='text-lg font-medium pr-2'>${data.data.price}</span>
-      </p>
+      <div className="m-3 flex justify-between text-sm">
+        <p className=''>
+          <span className='text-gray-900 group-hover:underline group-hover:underline-offset-4'>{data.data.title}</span>  
+        </p>
+        <span className='text-gray-900 font-medium text-lg'>${data.data.price}</span>
+      </div>
     </div>
   );
 }

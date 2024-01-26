@@ -1,11 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ShoppingContext } from "../../context/ShoppingContext";
 
 const ProductDetail = () => {
     const context = useContext(ShoppingContext);
+
+    useEffect(() => {
+        if (context.isProductDetailOpen) {
+            document.body.classList.add('no-scrolling');
+        } else {
+            document.body.classList.remove('no-scrolling');
+        }
+
+        return () => {
+            document.body.classList.remove('no-scrolling');
+        };
+    }, [context.isProductDetailOpen]);
     
     return (
-        <aside className={`${context.isProductDetailOpen ? 'flex' : 'hidden'} w-[360px] h-[calc(100vh-68px)] top-[68px] flex flex-col fixed right-0 border border-black rounded-lg bg-white`}>
+        <aside className={`${context.isProductDetailOpen ? 'flex' : 'hidden'} max-sm:w-full max-sm:h-screen max-sm:border-none max-sm:overflow-y-scroll max-sm:no-scrollbar  w-[360px] h-[calc(100vh-68px)] top-[68px] flex flex-col fixed right-0 border border-black rounded-lg bg-white`}>
             <div className='flex justify-between items-center p-6'>
                 <h2 className='font-medium text-xl'>Detail</h2>
                 <div className="bg-gray-400 bg-opacity-30 hover:bg-opacity-20 p-2 rounded-full cursor-pointer" onClick={() => context.closeProductDetail()}>

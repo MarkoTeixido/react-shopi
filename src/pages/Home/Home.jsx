@@ -34,9 +34,10 @@ function Home() {
       <input
         type="text"
         placeholder='Search a product'
-        className='rounded-lg border border-black w-80 p-3 mb-4 focus:outline-none'
-        onChange={(event) => context.setSearchByTitle(event.target.value)} />
-      <div className={`gap-4 w-full max-w-screen-lg ${context.filteredItems?.length === 0 ? '' : 'grid grid-cols-4'}`}>
+        className=' max-sm:w-60 rounded-lg border border-black w-80 p-3 mb-4 caret-neutral-900'
+        onChange={(event) => context.setSearchByTitle(event.target.value)} 
+      />
+      <div className={`gap-4 w-full max-w-screen-lg max-lg:px-3 ${context.filteredItems?.length === 0 ? '' : 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
         {renderView()}
       </div>
       <ProductDetail />

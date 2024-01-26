@@ -1,9 +1,11 @@
+import FormSignIn from "../../components/FormSignIn/FormSignIn";
+
 function SignIn() {
-    return (
-      <div className="bg-red-100">
-        SignIn
-      </div>
-    );
+  return (
+    <div className="">
+      <FormSignIn />
+    </div>
+  );
 }
   
 export default SignIn;
