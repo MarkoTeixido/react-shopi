@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import { ShoppingContext } from "../../context/ShoppingContext";
 import Card from "../../components/Card/Card";
 import ProductDetail from "../../components/ProductDetail/ProductDetail";
@@ -7,6 +8,13 @@ import ProductLoading from "../../components/ProductLoading/ProductLoading";
 
 function Home() {
   const context = useContext(ShoppingContext);
+  const location = useLocation();
+
+  useEffect(() => {
+    context.closeCheckoutSideMenu();
+    context.closeProductDetail();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   const renderNoMatches = () => (
     <div className="flex flex-col justify-center items-center gap-3">

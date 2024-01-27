@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useEffect, useContext, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ShoppingContext } from '../../context/ShoppingContext';
 
 function MobileNavbar() {
     const context = useContext(ShoppingContext);
+    const location = useLocation();
     const [menuVisible, setMenuVisible] = useState(false);
 
     const toggleMenu = () => {
@@ -24,7 +25,11 @@ function MobileNavbar() {
                 </svg>
             );
         }
-    }
+    };
+
+    useEffect(() => {
+        setMenuVisible(false);
+    }, [location]);
 
     return (
         <nav className='bg-white flex justify-between items-center fixed z-10 top-0 w-full py-5 px-4 text-sm font-light'>

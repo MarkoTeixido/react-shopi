@@ -5,7 +5,7 @@ import OrderCard from '../OrderCard/OrderCard';
 import { totalPrice } from '../../utils/utils';
 
 const CheckoutSideMenu = () => {
-    const context = useContext(ShoppingContext);
+    const context = useContext(ShoppingContext)
     
     const handleDelete = (id) => {
         const filteredProducts = context.cartProducts.filter(product => product.id != id);
@@ -55,7 +55,7 @@ const CheckoutSideMenu = () => {
                     <span className='font-medium text-2xl'>${totalPrice(context.cartProducts)}</span>
                 </p>
                 <Link to='/cart'>
-                    <button className='bg-neutral-900 py-3 text-white w-full max-sm:h-14 rounded-lg hover:opacity-80 transition duration-150 hover:ease-linear'>View my cart</button>
+                    <button className='bg-neutral-900 py-3 text-white w-full max-sm:h-14 hover:opacity-80 transition duration-150 hover:ease-linear' onClick={() => context.closeCheckoutSideMenu()}>View my cart</button>
                 </Link>
             </div>
         </aside>

@@ -5,7 +5,7 @@ const OrdersCard = props => {
 
   return (
     
-    <div className="md:w-72 flex justify-between items-center mb-3 border rounded-lg p-3">
+    <div className="md:w-72 flex justify-between items-center mb-3 border rounded-lg p-3 hover:bg-gray-400 hover:bg-opacity-10">
       <div className="flex items-center justify-between grow gap-2 px-4">
           <div className="flex md:flex-col gap-1 items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -26,7 +26,7 @@ const OrdersCard = props => {
             <p className="font-light text-sm">{date}</p>
           </div>
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2  p-1 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
           <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
