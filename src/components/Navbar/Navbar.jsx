@@ -9,8 +9,8 @@ const Navbar = () => {
 
     const [scrolling, setScrolling] = useState(false);
     const activeStyle = "underline underline-offset-4";
-    const navbarStyles = scrolling ? 'bg-neutral-900 text-neutral-200' : '';
-    const linkStyles = scrolling ? 'hover:text-neutral-50' : 'hover:text-neutral-700';
+    const navbarStyles = scrolling ? 'bg-neutral-900 text-neutral-200' : 'bg-white text-neutral-900';
+    const linkStyles = scrolling ? 'hover:text-neutral-50' : 'hover:text-neutral-600';
     const isMobile = useMediaQuery({ maxWidth: 820 });
 
     useEffect(() => {
