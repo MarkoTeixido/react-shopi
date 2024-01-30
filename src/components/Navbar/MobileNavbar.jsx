@@ -1,8 +1,9 @@
 import { useEffect, useContext, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { ShoppingContext } from '../../context/ShoppingContext';
 
-function MobileNavbar() {
+function MobileNavbar({ navbarStyles }) {
     const context = useContext(ShoppingContext);
     const location = useLocation();
     const [menuVisible, setMenuVisible] = useState(false);
@@ -32,9 +33,9 @@ function MobileNavbar() {
     }, [location]);
 
     return (
-        <nav className='bg-white flex justify-between items-center fixed z-10 top-0 w-full py-5 px-4 text-sm font-light'>
+        <nav className={`flex justify-between items-center fixed z-10 top-0 w-full py-5 px-4 text-sm font-light ${navbarStyles}`}>
             <div>
-                <NavLink to='/' className='text-neutral-900 font-semibold text-lg'>
+                <NavLink to='/' className='font-semibold text-lg'>
                     Shopi
                 </NavLink>
             </div>
@@ -109,5 +110,9 @@ function MobileNavbar() {
         </nav>
     );
 }
+
+MobileNavbar.propTypes = {   
+    navbarStyles: PropTypes.string.isRequired,
+};
 
 export default MobileNavbar;

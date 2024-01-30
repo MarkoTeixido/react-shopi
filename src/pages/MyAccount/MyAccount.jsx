@@ -2,7 +2,7 @@ import AccountDetail from "../../components/AccountDetail/AccountDetail";
 
 function MyAccount() {
     return (
-        <div>
+        <div className="mb-10">
             <AccountDetail />
         </div>
     );

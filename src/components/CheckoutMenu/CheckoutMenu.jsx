@@ -32,7 +32,7 @@ const CheckoutSideMenu = () => {
     return (
         <aside className="md:w-[600px] flex flex-col self-center gap-3">
             <div className='flex justify-between items-center p-6'>
-                <h2 className='font-medium text-xl'>My Order</h2>
+                <h2 className='font-medium text-xl'>Cart</h2>
             </div> 
             <div className=' px-6'>
                 {

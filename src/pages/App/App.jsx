@@ -1,4 +1,5 @@
-import { useRoutes, BrowserRouter } from 'react-router-dom';
+import { useLayoutEffect } from 'react';
+import { useRoutes, BrowserRouter, useLocation } from 'react-router-dom';
 import { ShoppingProvider } from '../../context/ShoppingContext';
 import Home from '../Home/Home';
 import MyAccount from '../MyAccount/MyAccount';
@@ -9,6 +10,7 @@ import SignIn from '../SignIn/SignIn';
 import Cart from '../Cart/Cart';
 import Navbar from '../../components/Navbar/Navbar';
 import Layout from '../../components/Layout/Layout';
+import Footer from '../../components/Footer/Footer';
 import '../../index.css';
 
 
@@ -32,16 +34,27 @@ const AppRoutes = () => {
   ]);
 
   return routes;
-}
+};
+
+const Wrapper = ({ children }) => {
+  const location = useLocation();
+  useLayoutEffect(() => {
+    document.documentElement.scrollTo(0, 0);
+  }, [location.pathname]);
+  return children;
+};
 
 const App = () => {
   return (
     <ShoppingProvider>
       <BrowserRouter>
         <Layout>
-          <AppRoutes />
+          <Wrapper>
+            <AppRoutes />
+          </Wrapper>
         </Layout>
         <Navbar />
+        <Footer />
       </BrowserRouter>
     </ShoppingProvider>
   );

@@ -17,7 +17,7 @@ function Home() {
   }, [location.pathname]);
 
   const renderNoMatches = () => (
-    <div className="flex flex-col justify-center items-center gap-3">
+    <div id="top" className="flex flex-col justify-center items-center gap-3">
       <p className="text-center font-medium text-lg">
         {context.searchByTitle ? "Sorry, No Matches Found.": "Exclusive Products"}
       </p>
@@ -73,7 +73,7 @@ function Home() {
         className=' max-sm:w-60 rounded-lg border border-black w-80 p-3 mb-4 caret-neutral-900'
         onChange={(event) => context.setSearchByTitle(event.target.value)} 
       />
-      <div className='w-full max-w-screen-lg max-lg:px-3'>
+      <div className='w-full max-w-screen-lg max-lg:px-3 mb-8'>
         {renderView()}
       </div>
       <ProductDetail />
