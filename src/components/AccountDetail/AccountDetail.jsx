@@ -24,7 +24,7 @@ function AccountDetail() {
 
     const renderUserInfo = () => {
         return (
-            <div className='flex flex-col w-80 gap-4 my-2'>
+            <div className='flex flex-col w-80 gap-4 my-4'>
                 <h2 className="font-medium text-center pb-1">My Account Information</h2>
                 <p className="py-2">
                     <span className='w-full rounded-lg border-gray-200 pr-4 py-4 pe-12 text-sm font-medium shadow-sm'>Name: </span>
