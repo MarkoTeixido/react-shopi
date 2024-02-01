@@ -6,6 +6,19 @@ import { ShoppingContext } from '../../context/ShoppingContext';
 function MobileNavbar({ navbarStyles }) {
     const context = useContext(ShoppingContext);
     const location = useLocation();
+
+    // Sign Out
+    const signOut = localStorage.getItem('sign-out');
+    const parsedSignOut = JSON.parse(signOut);
+    const isUserSignOut = context.signOut || parsedSignOut;
+    // Account
+    const account = localStorage.getItem('account');
+    const parsedAccount = JSON.parse(account);
+    // Has an account
+    const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
+    const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
+    const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
+
     const [menuVisible, setMenuVisible] = useState(false);
 
     const toggleMenu = () => {
@@ -28,12 +41,46 @@ function MobileNavbar({ navbarStyles }) {
         }
     };
 
+    const renderView = () => {
+        if (hasUserAnAccount && !isUserSignOut) {
+            return (
+                <>
+                    <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
+                        <NavLink to='/my-orders' className='text-sm font-medium'>
+                            My Orders
+                        </NavLink>
+                    </li>
+                    <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
+                        <NavLink to='/my-account' className='text-sm font-medium'>
+                            My Account
+                        </NavLink>
+                    </li>
+                    <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
+                        <NavLink to='/sign-in' className='text-sm font-medium'>
+                            Sign out
+                        </NavLink>
+                    </li>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
+                        <NavLink to='/sign-in' className='text-sm font-medium'>
+                            Sign In / Sign up
+                        </NavLink>
+                    </li>
+                </>
+            );
+        }
+    };
+
     useEffect(() => {
         setMenuVisible(false);
     }, [location]);
 
     return (
-        <nav className={` flex justify-between items-center fixed z-10 top-0 w-full py-5 px-4 text-sm font-light ${navbarStyles}`}>
+        <nav className={`flex justify-between items-center fixed z-10 top-0 w-full py-5 px-4 text-sm font-light ${navbarStyles}`}>
             <div>
                 <NavLink to='/' className='font-semibold text-lg'>
                     Shopi
@@ -91,21 +138,7 @@ function MobileNavbar({ navbarStyles }) {
                         </ul>
                     </details>
                 </li>
-                <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
-                    <NavLink to='/my-orders' className='text-sm font-medium'>
-                        My Orders
-                    </NavLink>
-                </li>
-                <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
-                    <NavLink to='/my-account' className='text-sm font-medium'>
-                        My Account
-                    </NavLink>
-                </li>
-                <li className='rounded-lg px-4 py-2 text-neutral-900 hover:bg-gray-100 hover:text-neutral-700'>
-                    <NavLink to='/sign-in' className='text-sm font-medium'>
-                        Sign In
-                    </NavLink>
-                </li>
+                {renderView()}
             </ul>
         </nav>
     );

@@ -8,6 +8,17 @@ import { format } from 'date-fns';
 const CheckoutSideMenu = () => {
     const context = useContext(ShoppingContext);
     const date = new Date();
+    // Sign Out
+    const signOut = localStorage.getItem('sign-out');
+    const parsedSignOut = JSON.parse(signOut);
+    const isUserSignOut = context.signOut || parsedSignOut;
+    // Account
+    const account = localStorage.getItem('account');
+    const parsedAccount = JSON.parse(account);
+    // Has an account
+    const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
+    const noAccountInLocalState = context.account ? Object.keys(context.account).length === 0 : true;
+    const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
 
     const handleDelete = (id) => {
         const filteredProducts = context.cartProducts.filter(product => product.id != id);
@@ -29,8 +40,28 @@ const CheckoutSideMenu = () => {
         context.setSearchByTitle(null);
     };
 
+    const renderButton = () => {
+        if(hasUserAnAccount && !isUserSignOut){
+            return (
+                <>
+                    <Link to='/my-orders/last' className=''>
+                        <button className='w-full px-10 py-4 text-white border bg-neutral-900 hover:opacity-80 transition duration-150 hover:ease-linear text-lg font-medium disabled:opacity-70' onClick={() => handleCheckout()} disabled={context.cartProducts.length === 0}>Checkout</button>
+                    </Link>
+                </>
+            );
+        } else {
+            return (
+                <>
+                    <Link to='/sign-in' className=''>
+                        <button className='w-full px-10 py-4 text-white border bg-neutral-900 hover:opacity-80 transition duration-150 hover:ease-linear text-lg font-medium'>Sign Up</button>
+                    </Link>
+                </>
+            );
+        }
+    };
+
     return (
-        <aside className="md:w-[600px] flex flex-col self-center gap-3">
+        <aside className="max-md:min-w-[280px] md:w-[600px] flex flex-col self-center gap-3">
             <div className='flex justify-between items-center p-6'>
                 <h2 className='font-medium text-xl'>Cart</h2>
             </div> 
@@ -55,9 +86,7 @@ const CheckoutSideMenu = () => {
                 </p>
             </div>
             <div className='px-4 gap-3 flex flex-col'>
-                <Link to='/my-orders/last' className=''>
-                    <button className='w-full px-10 py-4 text-white border bg-neutral-900 hover:opacity-80 transition duration-150 hover:ease-linear text-lg font-medium' onClick={() => handleCheckout()} disabled={context.cartProducts.length === 0}>Checkout</button>
-                </Link>
+                {renderButton()}
                 <Link to='/' className=''>
                     <button className='w-full px-10 py-4 bg-white border hover:bg-neutral-900 hover:text-white transition duration-150 hover:ease-linear text-lg font-medium'>Back</button>
                 </Link>

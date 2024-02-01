@@ -4,9 +4,16 @@ import PropTypes from 'prop-types';
 
 const ShoppingContext = createContext();
 
-
-
 const ShoppingProvider = ({children}) => {
+
+    // My account
+    const [account, setAccount] = useState({});
+
+    // Sign out
+    const [signOut, setSignOut] = useState(false);
+
+    // Form Sign in or Sign up
+    const [viewForm, setViewForm] = useState('user-info');
 
     // Shopping Cart · Increment quantity
     const [count , setCount] = useState(0);
@@ -64,7 +71,7 @@ const ShoppingProvider = ({children}) => {
 
     const filteredItemsByCategory = (items, searchByCategory) => {
         return items?.filter(item => item.category.name.toLowerCase().includes(searchByCategory.toLowerCase()));
-    }
+    };
     
 
     useEffect(() => {
@@ -120,11 +127,17 @@ const ShoppingProvider = ({children}) => {
             filteredItems,
             searchByCategory,
             setSearchByCategory,
+            account,
+            setAccount,
+            signOut,
+            setSignOut,
+            viewForm,
+            setViewForm,
         }}>
             {children}
         </ShoppingContext.Provider>  
     );
-}
+};
 
 ShoppingProvider.propTypes = {
     children: PropTypes.node.isRequired,

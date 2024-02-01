@@ -1,6 +1,7 @@
-import { useLayoutEffect } from 'react';
-import { useRoutes, BrowserRouter, useLocation } from 'react-router-dom';
-import { ShoppingProvider } from '../../context/ShoppingContext';
+import { useContext, useLayoutEffect } from 'react';
+import { useRoutes, BrowserRouter, useLocation, Navigate } from 'react-router-dom';
+import { ShoppingContext, ShoppingProvider } from '../../context/ShoppingContext';
+import initializeLocalStorage from '../../utils/localStorage';
 import Home from '../Home/Home';
 import MyAccount from '../MyAccount/MyAccount';
 import MyOrder from '../MyOrder/MyOrder';
@@ -15,6 +16,19 @@ import '../../index.css';
 
 
 const AppRoutes = () => {
+  const context = useContext(ShoppingContext);
+  // Account
+  const account = localStorage.getItem('account');
+  const parsedAccount = JSON.parse(account);
+  // Sign Out
+  const signOut = localStorage.getItem('sign-out');
+  const parsedSignOut = JSON.parse(signOut);
+  // Has an account
+  const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true;
+  const noAccountInLocalState = Object.keys(context.account).length === 0;
+  const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState;
+  const isUserSignOut = context.signOut || parsedSignOut;
+
   let routes = useRoutes([
     { path: '/', element: <Home /> },
     { path: '/clothes', element: <Home /> },
@@ -23,11 +37,11 @@ const AppRoutes = () => {
     { path: '/shoes', element: <Home /> },
     { path: '/toys', element: <Home /> },
     { path: '/others', element: <Home /> },
-    { path: '/my-account', element: <MyAccount /> },
-    { path: '/my-order', element: <MyOrder /> },
-    { path: '/my-orders', element: <MyOrders /> },
-    { path: '/my-orders/last', element: <MyOrder /> },
-    { path: '/my-orders/:id', element: <MyOrder /> },
+    { path: '/my-account', element: hasUserAnAccount && !isUserSignOut ? <MyAccount /> : <Navigate replace to={'/sign-in'} /> },
+    { path: '/my-order', element: hasUserAnAccount && !isUserSignOut ? <MyOrder /> : <Navigate replace to={'/sign-in'} /> },
+    { path: '/my-orders', element: hasUserAnAccount && !isUserSignOut ? <MyOrders /> : <Navigate replace to={'/sign-in'} />},
+    { path: '/my-orders/last', element: hasUserAnAccount && !isUserSignOut ? <MyOrder /> : <Navigate replace to={'/sign-in'} /> },
+    { path: '/my-orders/:id', element: hasUserAnAccount && !isUserSignOut ? <MyOrder /> : <Navigate replace to={'/sign-in'} /> },
     { path: '/sign-in', element: <SignIn /> },
     { path: '/cart', element: <Cart /> },
     { path: '/*', element: <NotFound /> },
@@ -45,6 +59,8 @@ const Wrapper = ({ children }) => {
 };
 
 const App = () => {
+  initializeLocalStorage();
+
   return (
     <ShoppingProvider>
       <BrowserRouter>
